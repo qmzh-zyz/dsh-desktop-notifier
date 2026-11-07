@@ -1,0 +1,45 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Unit tests
+        run: node --test
+
+      - name: Syntax check
+        run: |
+          node --check lib/index.js
+          node --check lib/policy.mjs
+          node --check tools/demo.mjs
+
+      - name: Toast XML builds without a notification platform
+        shell: pwsh
+        run: |
+          $payload = @{
+            title = 'DSH needs approval'
+            body  = 'bash: sandbox escalation'
+            logo  = (Resolve-Path ./assets/icon-approval.png).Path
+            scenario = 'auto'
+          } | ConvertTo-Json
+          [IO.File]::WriteAllText("$PWD/payload.json", $payload, (New-Object Text.UTF8Encoding($false)))
+          $out = powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./assets/notify.ps1 -JsonPath ./payload.json -DryRun
+          $out | Out-Host
+          if ($out -notmatch '"action":"dry-run"') { throw 'notify.ps1 did not produce a dry-run verdict' }
+
+      - name: Taskbar overlay graphics render
+        shell: pwsh
+        run: |
+          $out = powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./assets/badge.ps1 -SelfTest -SelfTestOut ./build
+          $out | Out-Host
+          if (-not (Test-Path ./build/badge-3.png)) { throw 'badge.ps1 did not render a sample overlay' }

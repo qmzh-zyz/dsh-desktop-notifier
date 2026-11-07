@@ -1,0 +1,6 @@
+* text=auto
+
+# PowerShell 5.1 reads BOM-less scripts with the local code page; keeping CRLF
+# and letting git track them as text means an editor cannot silently flip them.
+*.ps1 text eol=crlf
+*.png binary
