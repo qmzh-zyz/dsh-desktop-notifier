@@ -1,4 +1,6 @@
-# dsh-desktop-notifier
+# DSH桌面通知
+
+<sub>`dsh-desktop-notifier` · DeepSeek Harness 的桌面通知增强插件</sub>
 
 **简体中文** | [English](README.en.md)
 

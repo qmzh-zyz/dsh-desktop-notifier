@@ -1,4 +1,6 @@
-# dsh-desktop-notifier
+# DSH Desktop Notifier
+
+<sub>`dsh-desktop-notifier` · a desktop-notification add-on for DeepSeek Harness (the Chinese name is 《DSH桌面通知》)</sub>
 
 > For the DeepSeek Harness desktop app on Windows: **approval requests pop up in the bottom-right corner**, and a finished turn **puts a red badge on the taskbar button and plays a chime** — even while DSH is minimized.
 

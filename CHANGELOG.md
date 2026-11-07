@@ -2,6 +2,11 @@
 
 遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## 0.1.2
+
+- **中文展示名定为「DSH桌面通知」**：README 标题、`package.json` 描述、GitHub 简介与 release 标题统一用这个名字；包名与仓库名仍是 `dsh-desktop-notifier`（npm 与 GitHub 的名称只接受 ASCII，中文只用于展示）。
+- 功能无变化。
+
 ## 0.1.1
 
 - **提示音改由插件自己发声**：toast 一律 `<audio silent="true">`，改由 `assets/chime.ps1` 合成并播放。此前声音挂在通知的 `<audio src="ms-winsoundevent:Notification.Default">` 上，系统关掉「通知声音」时整条提醒就是静音的——而这恰恰是不少人的设置。
