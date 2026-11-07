@@ -57,8 +57,10 @@ test('Windows mounts the approval waterfall and the turn listener', () => {
   const ctx = fakeContext()
   withPlatform('win32', () =>
     plugin.apply(ctx, {
-      // No focus tick: it would spawn the badge helper, and this test must stay silent.
+      // No focus tick and no protocol registration: this test must stay silent
+      // and must not write to the real registry.
       clearBadgeOnFocus: false,
+      clickToFocus: false,
       completion: { enabled: false },
     }),
   )
@@ -70,7 +72,7 @@ test('Windows mounts the approval waterfall and the turn listener', () => {
 
 test('turn events are handled without spawning when completion is off', () => {
   const ctx = fakeContext()
-  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false, completion: { enabled: false } }))
+  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false, clickToFocus: false, completion: { enabled: false } }))
   const session = { header: { id: 's1', cwd: 'C:\\w\\p' } }
   const listener = ctx.handlers.get('session/event').fn
   assert.doesNotThrow(() => listener(session, { type: 'turn/start', data: { turn: 1 } }))
@@ -79,7 +81,7 @@ test('turn events are handled without spawning when completion is off', () => {
 
 test('malformed session events are ignored, not thrown on', () => {
   const ctx = fakeContext()
-  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false }))
+  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false, clickToFocus: false }))
   const listener = ctx.handlers.get('session/event').fn
   assert.doesNotThrow(() => listener(undefined, undefined))
   assert.doesNotThrow(() => listener({}, {}))
@@ -88,7 +90,7 @@ test('malformed session events are ignored, not thrown on', () => {
 
 test('every effect disposes cleanly', () => {
   const ctx = fakeContext()
-  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false }))
+  withPlatform('win32', () => plugin.apply(ctx, { clearBadgeOnFocus: false, clickToFocus: false }))
   for (const register of ctx.disposers) {
     const dispose = register()
     assert.equal(typeof dispose, 'function')

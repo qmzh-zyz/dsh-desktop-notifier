@@ -93,6 +93,8 @@ node tools/demo.mjs chime            # 单独的提示音
 | `windowMatch` | `DeepSeek Harness` | 承载任务栏按钮的进程名；DSH 改名或多开时改这里 |
 | `badgeColor` | `#f5455c` | 角标颜色，`#rgb` / `#rrggbb` / `#rrggbbaa` |
 | `clearBadgeOnFocus` | `true` | 窗口切回前台时清掉角标 |
+| `clickToFocus` | `true` | 点通知把 DSH 拉到前台（注册 `dshnotifier:` 协议；最小化会还原，被挡住会提到最前） |
+| `appPath` | 空 | 可选：DSH 的 exe 绝对路径。空着就从运行中的进程里取；DSH 已彻底退出时点通知靠它重新拉起 |
 | `approval.enabled` | `true` | 审批通知开关 |
 | `approval.skipWhenFocused` | `true` | DSH 在前台时不弹（卡片本来就在你眼前） |
 | `approval.scenario` | `auto` | `auto` = 依次尝试 `urgent` → `alarm` → `default`；后两者是系统里唯一能越过勿扰与全屏的提醒类型 |
@@ -134,15 +136,15 @@ session/event → turn/end (reason.kind === 'completed')
 ## 已知限制
 
 - 只有 Windows 有任务栏角标与系统通知通道；其它平台插件静默禁用。
-- 托盘气泡降级通道**不能**穿透独占全屏（那是 WinRT `urgent`/`alarm` 才有的待遇）；能用 toast 时不受影响。
-- 点通知**不会**跳回 DSH（未实现协议激活）。需要的话可以照 `dsh-desktop-alerts` 的做法加 `dshalerts:` 注册。
+- 托盘气泡降级通道**不能**穿透独占全屏（那是 WinRT `urgent`/`alarm` 才有的待遇），也**不支持点击跳回**（气泡没有协议激活能力）；能用 toast 时不受影响。
+- 点击通知切回 DSH 依赖按用户注册的 `dshnotifier:` 协议（`HKCU\Software\Classes`，无需管理员）。DSH 被彻底退出后再点通知，会用注册时记录的 exe 路径尝试重新拉起；如果换过安装位置，重开一次 DSH 让插件重写注册表即可。
 - 同一台机器跑多个 DSH 实例时，助手按进程名找窗口，只认第一个；需要时用 `windowMatch` 指定。
 - 通知的语言跟随配置，目前只有中文文案（`title` 可改）。
 
 ## 开发
 
 ```powershell
-npm test                      # 33 个 node:test 用例（策略 + 审批监听 + 插件契约）
+npm test                      # 39 个 node:test 用例（策略 + 审批监听 + 协议命令 + 插件契约）
 npm run icons                 # 重新生成 assets/*.png（System.Drawing，无需 Pillow）
 node tools/demo.mjs toast done
 powershell -NoProfile -ExecutionPolicy Bypass -File assets/notify.ps1 -JsonPath payload.json -DryRun   # 只打印 toast XML

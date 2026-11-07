@@ -195,3 +195,19 @@ test('turnKey is stable per session and turn', () => {
   assert.equal(turnKey('s1', 3), 's1#3')
   assert.notEqual(turnKey('s1', 3), turnKey('s1', 4))
 })
+
+test('toasts carry the focus protocol so a click can return to DSH', () => {
+  const config = normalizeConfig({})
+  assert.equal(config.clickToFocus, true)
+  assert.equal(approvalPayload({ toolName: 'bash' }, config, '').launch, 'dshnotifier:focus')
+  assert.equal(completionPayload({ header: { id: 's' } }, config, '').launch, 'dshnotifier:focus')
+
+  const off = normalizeConfig({ clickToFocus: false })
+  assert.equal(approvalPayload({ toolName: 'bash' }, off, '').launch, '')
+  assert.equal(completionPayload({ header: { id: 's' } }, off, '').launch, '')
+})
+
+test('appPath is optional and trimmed', () => {
+  assert.equal(normalizeConfig({}).appPath, '')
+  assert.equal(normalizeConfig({ appPath: '  C:\\dsh\\app.exe  ' }).appPath, 'C:\\dsh\\app.exe')
+})

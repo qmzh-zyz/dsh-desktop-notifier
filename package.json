@@ -1,6 +1,6 @@
 {
   "name": "dsh-desktop-notifier",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "DSH桌面通知：DeepSeek Harness 插件，最小化时审批请求弹 Windows 右下角通知，任务完成时在任务栏图标挂角标并响提示音。",
   "type": "module",
   "main": "lib/index.js",

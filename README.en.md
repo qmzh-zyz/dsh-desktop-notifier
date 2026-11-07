@@ -60,6 +60,8 @@ Override in the profile's `cordis.patch.yml` under the entry id `desktop-notifie
 | `windowMatch` | `DeepSeek Harness` | Process name that owns the taskbar button |
 | `badgeColor` | `#f5455c` | `#rgb`, `#rrggbb` or `#rrggbbaa` |
 | `clearBadgeOnFocus` | `true` | Clear the badge when the window comes back |
+| `clickToFocus` | `true` | Clicking a banner brings DSH forward (registers the `dshnotifier:` scheme; restores a minimized window, lifts a buried one) |
+| `appPath` | empty | Optional absolute path to the DSH exe; used to relaunch it when the app was closed to the tray. Empty means "derive it from the running process" |
 | `approval.enabled` | `true` | Approval banners |
 | `approval.skipWhenFocused` | `true` | Stay quiet while DSH is in front |
 | `approval.scenario` | `auto` | `auto` tries `urgent` → `alarm` → `default`; the first two are the only Windows reminder classes allowed through DND and fullscreen |
@@ -102,14 +104,15 @@ Deliberate choices:
 
 - Windows only for both the badge and the notification channel.
 - The tray-balloon fallback cannot break through exclusive-fullscreen; that is a WinRT `urgent`/`alarm` privilege. When toasts are available this does not apply.
-- Clicking a notification does not return to DSH (no protocol activation yet).
+- Click to return relies on a per-user `dshnotifier:` protocol in `HKCU\Software\Classes` (no administrator needed). If DSH is fully quit, the handler relaunches the exe recorded at registration; re-open DSH once after moving the install so the plugin rewrites the command.
+- The tray-balloon fallback cannot activate at all: a balloon has no protocol activation, so click-to-return works only on the toast channel.
 - Multiple DSH instances: the helper picks the first window by process name; use `windowMatch` to pin it.
 - Banner copy is Chinese; `title` is configurable.
 
 ## Development
 
 ```powershell
-npm test                      # 33 node:test cases
+npm test                      # 39 node:test cases
 npm run icons                 # regenerate assets/*.png
 powershell -NoProfile -ExecutionPolicy Bypass -File assets/notify.ps1 -JsonPath payload.json -DryRun
 powershell -NoProfile -ExecutionPolicy Bypass -File assets/badge.ps1 -SelfTest

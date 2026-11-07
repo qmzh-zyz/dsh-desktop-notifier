@@ -2,6 +2,14 @@
 
 遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## 0.2.0
+
+- **点通知切回 DSH**：toast 现在带 `activationType="protocol" launch="dshnotifier:focus"`，插件在加载时按用户注册 `HKCU\Software\Classes\dshnotifier`（无需管理员）。点击通知会跑 `assets/launch.vbs` → `assets/focus.ps1`：最小化的窗口还原、被挡住的窗口提到最前；DSH 已退出时用注册时记录的 exe 重新拉起。wscript 负责启动，所以不会闪黑框。
+- 新配置 `clickToFocus`（默认开）与 `appPath`（可选，DSH 的 exe 绝对路径）。
+- `notify.ps1` 支持 `launch` 字段；托盘气泡降级通道不支持点击激活，行为不变。
+- 测试从 33 个增至 39 个：协议命令拼装、`launch` 字段、`appPath` 归一化。
+- CI 增加 `focus.ps1 -DryRun` 冒烟（验证 Win32 互操作类型能加载、脚本能给出结论）。
+
 ## 0.1.2
 
 - **中文展示名定为「DSH桌面通知」**：README 标题、`package.json` 描述、GitHub 简介与 release 标题统一用这个名字；包名与仓库名仍是 `dsh-desktop-notifier`（npm 与 GitHub 的名称只接受 ASCII，中文只用于展示）。

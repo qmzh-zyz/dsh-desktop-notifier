@@ -43,3 +43,10 @@ jobs:
           $out = powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./assets/badge.ps1 -SelfTest -SelfTestOut ./build
           $out | Out-Host
           if (-not (Test-Path ./build/badge-3.png)) { throw 'badge.ps1 did not render a sample overlay' }
+
+      - name: Focus helper loads its interop and reports
+        shell: pwsh
+        run: |
+          $out = powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./assets/focus.ps1 -DryRun -WindowMatch 'NoSuchProcessForCi'
+          $out | Out-Host
+          if ($out -notmatch '"ok"') { throw 'focus.ps1 produced no verdict' }

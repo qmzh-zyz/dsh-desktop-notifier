@@ -200,11 +200,21 @@ try {
     } catch { $logoXml = '' }
   }
 
+  # A toast cannot activate an unpackaged app (there is no COM activator to
+  # launch), but Windows will happily ShellExecute a URI. lib/protocol.mjs
+  # registers the dshnotifier: scheme under HKCU; declaring
+  # activationType="protocol" is what makes a click go through it.
+  $launchAttr = ''
+  $launchUri = [string]$payload.launch
+  if ($launchUri) {
+    $launchAttr = ' activationType="protocol" launch="' + (Xml-Escape $launchUri) + '"'
+  }
+
   $candidateXml = ''
   foreach ($candidate in $candidates) {
     $scenarioAttr = ''
     if ($candidate -ne 'default') { $scenarioAttr = ' scenario="' + $candidate + '"' }
-    $xml = '<toast' + $scenarioAttr + ' duration="' + $toastDuration + '"><visual><binding template="ToastGeneric">' +
+    $xml = '<toast' + $scenarioAttr + ' duration="' + $toastDuration + '"' + $launchAttr + '><visual><binding template="ToastGeneric">' +
       $logoXml + '<text>' + (Xml-Escape $title) + '</text><text>' + (Xml-Escape $body) + '</text></binding></visual>' +
       $audioXml + '</toast>'
     $candidateXml = $xml
@@ -227,7 +237,7 @@ try {
     foreach ($candidate in $candidates) {
       $scenarioAttr = ''
       if ($candidate -ne 'default') { $scenarioAttr = ' scenario="' + $candidate + '"' }
-      $xml = '<toast' + $scenarioAttr + ' duration="' + $toastDuration + '"><visual><binding template="ToastGeneric">' +
+      $xml = '<toast' + $scenarioAttr + ' duration="' + $toastDuration + '"' + $launchAttr + '><visual><binding template="ToastGeneric">' +
         $logoXml + '<text>' + (Xml-Escape $title) + '</text><text>' + (Xml-Escape $body) + '</text></binding></visual>' +
         $audioXml + '</toast>'
       $document = New-Object Windows.Data.Xml.Dom.XmlDocument
