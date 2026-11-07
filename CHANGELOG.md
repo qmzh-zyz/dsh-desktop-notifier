@@ -2,6 +2,13 @@
 
 遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## 0.1.1
+
+- **提示音改由插件自己发声**：toast 一律 `<audio silent="true">`，改由 `assets/chime.ps1` 合成并播放。此前声音挂在通知的 `<audio src="ms-winsoundevent:Notification.Default">` 上，系统关掉「通知声音」时整条提醒就是静音的——而这恰恰是不少人的设置。
+- 审批与完成用不同音色：审批两音 `chime`、完成三音上行 `rise`；音量整体上调（0.25 → 0.3–0.35），单声时长加长。
+- 只有弹窗**真的显示**（`action: "shown"`）才发声：因为 DSH 在前台而跳过的提醒不会突然响一声。
+- `README` 补充说明声音由插件合成、不依赖系统通知音设置。
+
 ## 0.1.0
 
 首个版本。

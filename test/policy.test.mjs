@@ -91,7 +91,7 @@ test('completionPlan: a normal away turn badges and toasts', () => {
     durationMs: 60_000,
     config: normalizeConfig(quietConfig),
   })
-  assert.deepEqual(plan, { badge: true, toast: true, chime: false })
+  assert.deepEqual(plan, { badge: true, toast: true, chime: true })
 })
 
 test('completionPlan: subagent turns never badge', () => {
@@ -126,7 +126,7 @@ test('completionPlan: a short turn is ignored when minTurnMs is set', () => {
   assert.deepEqual(plan, { badge: false, toast: false, chime: false })
 })
 
-test('completionPlan: banner off falls back to an explicit chime', () => {
+test('completionPlan: banner off still chimes', () => {
   const plan = completionPlan({
     session: { header: { id: 's5' } },
     reason: { kind: 'completed' },

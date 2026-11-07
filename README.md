@@ -94,13 +94,13 @@ node tools/demo.mjs chime            # 单独的提示音
 | `approval.enabled` | `true` | 审批通知开关 |
 | `approval.skipWhenFocused` | `true` | DSH 在前台时不弹（卡片本来就在你眼前） |
 | `approval.scenario` | `auto` | `auto` = 依次尝试 `urgent` → `alarm` → `default`；后两者是系统里唯一能越过勿扰与全屏的提醒类型 |
-| `approval.sound` | `true` | 通知自带一声提示音 |
+| `approval.sound` | `true` | 弹窗出现时响一声（插件自己合成，不依赖系统通知音） |
 | `approval.title` | `DSH 需要你审批` | 通知标题 |
 | `approval.repeat` / `repeatIntervalSec` | `0` / `20` | 审批未被处理时的追加提醒次数与间隔；点掉或取消后立刻停 |
 | `completion.enabled` | `true` | 完成提醒开关 |
 | `completion.badge` | `true` | 任务栏角标 |
 | `completion.toast` | `true` | 完成时也弹一条通知（几秒自动收起） |
-| `completion.sound` | `true` | 提示音；关了通知时用独立 chime 补一声 |
+| `completion.sound` | `true` | 完成时响三音上行（同样由插件发声） |
 | `completion.skipWhenFocused` | `true` | 你正看着 DSH 时不打扰 |
 | `completion.scenario` | `default` | 完成通知用普通强度，不抢焦点 |
 | `completion.minTurnMs` | `2000` | 短于此时长的回合不计数（避免打错字改一句就响） |

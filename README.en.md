@@ -61,13 +61,13 @@ Override in the profile's `cordis.patch.yml` under the entry id `desktop-notifie
 | `approval.enabled` | `true` | Approval banners |
 | `approval.skipWhenFocused` | `true` | Stay quiet while DSH is in front |
 | `approval.scenario` | `auto` | `auto` tries `urgent` → `alarm` → `default`; the first two are the only Windows reminder classes allowed through DND and fullscreen |
-| `approval.sound` | `true` | One chime with the banner |
+| `approval.sound` | `true` | One chime when the banner appears; synthesized by the plugin, not by Windows |
 | `approval.title` | `DSH 需要你审批` | Banner title |
 | `approval.repeat` / `repeatIntervalSec` | `0` / `20` | Extra reminders while an approval is unanswered |
 | `completion.enabled` | `true` | Completion reminders |
 | `completion.badge` | `true` | Taskbar counter |
 | `completion.toast` | `true` | Also show a completion banner |
-| `completion.sound` | `true` | Chime; a standalone chime is used when the banner is off |
+| `completion.sound` | `true` | A rising three-note chime, also played by the plugin itself |
 | `completion.skipWhenFocused` | `true` | No reminder while you watch DSH |
 | `completion.scenario` | `default` | Completion stays unobtrusive |
 | `completion.minTurnMs` | `2000` | Shorter turns do not count |

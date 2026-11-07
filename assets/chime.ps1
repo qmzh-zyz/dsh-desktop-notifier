@@ -19,9 +19,9 @@ $sampleRate = 44100
 
 # note = frequency in Hz, seconds = duration, gain = peak amplitude 0..1
 switch ($Preset) {
-  'beep' { $notes = @(@{ hz = 880; seconds = 0.12; gain = 0.25 }) }
-  'rise' { $notes = @(@{ hz = 660; seconds = 0.11; gain = 0.22 }, @{ hz = 880; seconds = 0.11; gain = 0.22 }, @{ hz = 1320; seconds = 0.14; gain = 0.22 }) }
-  default { $notes = @(@{ hz = 880; seconds = 0.13; gain = 0.25 }, @{ hz = 1318; seconds = 0.18; gain = 0.22 }) }
+  'beep' { $notes = @(@{ hz = 880; seconds = 0.16; gain = 0.35 }) }
+  'rise' { $notes = @(@{ hz = 660; seconds = 0.14; gain = 0.32 }, @{ hz = 990; seconds = 0.14; gain = 0.32 }, @{ hz = 1480; seconds = 0.18; gain = 0.32 }) }
+  default { $notes = @(@{ hz = 880; seconds = 0.16; gain = 0.35 }, @{ hz = 1318; seconds = 0.24; gain = 0.30 }) }
 }
 
 $samples = New-Object System.Collections.Generic.List[Int16]
