@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-  dsh-away-alerts :: chime
+  dsh-desktop-notifier :: chime
   ---------------------------------------------------------------------------
   A short, in-process synthesized chime. No audio file ships with the plugin and
   nothing is downloaded: the waveform is built into a WAV in memory and handed

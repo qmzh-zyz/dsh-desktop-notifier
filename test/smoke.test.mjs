@@ -37,7 +37,7 @@ function withPlatform(value, run) {
 }
 
 test('the package exports a named plugin with apply()', () => {
-  assert.equal(plugin.name, 'dsh-away-alerts')
+  assert.equal(plugin.name, 'dsh-desktop-notifier')
   assert.equal(typeof plugin.apply, 'function')
 })
 

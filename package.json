@@ -1,5 +1,5 @@
 {
-  "name": "dsh-away-alerts",
+  "name": "dsh-desktop-notifier",
   "version": "0.1.0",
   "description": "DeepSeek Harness 插件：最小化时审批请求弹 Windows 右下角通知，任务完成时在任务栏图标挂角标并响提示音。",
   "type": "module",
@@ -35,6 +35,14 @@
     "sound"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qmzh-zyz/dsh-desktop-notifier.git"
+  },
+  "homepage": "https://github.com/qmzh-zyz/dsh-desktop-notifier#readme",
+  "bugs": {
+    "url": "https://github.com/qmzh-zyz/dsh-desktop-notifier/issues"
+  },
   "engines": {
     "node": ">=22"
   },

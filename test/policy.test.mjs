@@ -172,8 +172,8 @@ test('approvalPayload prefers displayReason over the raw reason', () => {
 })
 
 test('completionPayload names the workspace folder', () => {
-  const payload = completionPayload({ header: { id: 'abc12345', cwd: 'D:\\projects\\dsh-away-alerts' } }, normalizeConfig(quietConfig), '')
-  assert.match(payload.body, /dsh-away-alerts/)
+  const payload = completionPayload({ header: { id: 'abc12345', cwd: 'D:\\projects\\dsh-desktop-notifier' } }, normalizeConfig(quietConfig), '')
+  assert.match(payload.body, /dsh-desktop-notifier/)
   assert.equal(payload.duration, 'short')
   assert.equal(payload.scenario, 'default')
 })

@@ -1,4 +1,4 @@
-# dsh-away-alerts
+# dsh-desktop-notifier
 
 > 你最小化 DSH 之后：**审批请求在桌面右下角弹出来**，**任务跑完在任务栏图标上挂一个红色角标并响一声**。
 
@@ -36,7 +36,7 @@ DSH 的审批卡片只出现在窗口里。你切去 Edge 看视频、开全屏�
 在 DSH 里打开「插件」页，选「从 Git 安装」，填仓库地址；或者直接让 DSH 调内置的 `plugin_manager`：
 
 ```
-install_bundle  target = github:<你的用户名>/dsh-away-alerts
+install_bundle  target = github:qmzh-zyz/dsh-desktop-notifier
 ```
 
 > 桌面端的 profile 由客户端自己管理，命令行 `dsh plugin --profile desktop add ...` 可能被拒绝；走插件页或 `plugin_manager` 最稳。
@@ -46,15 +46,15 @@ install_bundle  target = github:<你的用户名>/dsh-away-alerts
 ```powershell
 # 1. 放到固定位置，别放临时目录
 $src = '<本仓库路径>'
-$dst = Join-Path $env:USERPROFILE '.dsh\plugins\dsh-away-alerts'
+$dst = Join-Path $env:USERPROFILE '.dsh\plugins\dsh-desktop-notifier'
 Copy-Item $src $dst -Recurse -Force
 
 # 2. 链接进 desktop profile
 cd $env:USERPROFILE\.dsh\profiles\desktop
-pnpm add link:$env:USERPROFILE\.dsh\plugins\dsh-away-alerts
+pnpm add link:$env:USERPROFILE\.dsh\plugins\dsh-desktop-notifier
 ```
 
-3. 把 `"dsh-away-alerts"` 追加到该 profile `package.json` 的 `dsh.profile.bundles` 数组**末尾**。
+3. 把 `"dsh-desktop-notifier"` 追加到该 profile `package.json` 的 `dsh.profile.bundles` 数组**末尾**。
 4. 重开 DeepSeek Harness。
 
 > 第 3 步不能省：`pnpm add` 只装进 `node_modules`，没写进 `bundles` 的包不会被加载（表现是：设置页里看不到它，通知也不弹）。
@@ -70,10 +70,10 @@ node tools/demo.mjs chime            # 单独的提示音
 
 ## 配置
 
-在 profile 的 `cordis.patch.yml` 里按 id `away-alerts` 覆盖：
+在 profile 的 `cordis.patch.yml` 里按 id `desktop-notifier` 覆盖：
 
 ```yaml
-- id: away-alerts
+- id: desktop-notifier
   config:
     badgeColor: '#f5455c'
     approval:
@@ -153,7 +153,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File assets/badge.ps1 -SelfTest  
 
 ## 卸载
 
-从 `dsh.profile.bundles` 里删掉 `dsh-away-alerts`，再 `pnpm remove dsh-away-alerts`，重开客户端。残留的 `HKCU\Software\Classes\AppUserModelId\DeepSeek.Harness.AwayAlerts` 无害，可手动删。
+从 `dsh.profile.bundles` 里删掉 `dsh-desktop-notifier`，再 `pnpm remove dsh-desktop-notifier`，重开客户端。残留的 `HKCU\Software\Classes\AppUserModelId\DeepSeek.Harness.DesktopNotifier` 无害，可手动删。
 
 ## 相关项目
 

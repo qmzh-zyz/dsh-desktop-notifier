@@ -30,7 +30,7 @@ function showToast(kind) {
     kind === 'approval'
       ? approvalPayload({ toolName: 'bash', reason: 'sandbox escalation 需要「允许一次」或「拒绝」' }, CONFIG, join(ASSETS, 'icon-approval.png'))
       : completionPayload({ header: { id: 'demo', cwd: 'C:\\work\\dsh-demo' } }, CONFIG, join(ASSETS, 'icon-task.png'))
-  const dir = mkdtempSync(join(tmpdir(), 'dsh-away-demo-'))
+  const dir = mkdtempSync(join(tmpdir(), 'dsh-desktop-notifier-demo-'))
   const jsonPath = join(dir, 'payload.json')
   writeFileSync(jsonPath, JSON.stringify(payload), 'utf8')
   const child = spawn('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ASSETS, 'notify.ps1'), '-JsonPath', jsonPath], {
@@ -69,7 +69,7 @@ switch (command) {
     break
   }
   case 'focus': {
-    const dir = mkdtempSync(join(tmpdir(), 'dsh-away-demo-'))
+    const dir = mkdtempSync(join(tmpdir(), 'dsh-desktop-notifier-demo-'))
     const jsonPath = join(dir, 'payload.json')
     writeFileSync(jsonPath, JSON.stringify({ focusProcesses: [CONFIG.windowMatch] }), 'utf8')
     const result = spawnSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ASSETS, 'notify.ps1'), '-JsonPath', jsonPath, '-FocusOnly'], {

@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-  dsh-away-alerts :: tray balloon fallback
+  dsh-desktop-notifier :: tray balloon fallback
   ---------------------------------------------------------------------------
   A WinRT toast needs a package identity (0x80073D54 without one), so it is not
   available on every machine. A Shell_NotifyIcon balloon needs nothing: it is

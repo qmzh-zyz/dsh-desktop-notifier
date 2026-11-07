@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-  dsh-away-alerts :: taskbar overlay helper (ITaskbarList3)
+  dsh-desktop-notifier :: taskbar overlay helper (ITaskbarList3)
   ---------------------------------------------------------------------------
   The DSH host plugin runs in its own process, so it cannot call Electron's
   setOverlayIcon on the window that owns the taskbar button. Windows lets any

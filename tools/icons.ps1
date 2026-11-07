@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-  dsh-away-alerts :: icon generator
+  dsh-desktop-notifier :: icon generator
   ---------------------------------------------------------------------------
   Regenerates the PNGs under assets/ with System.Drawing, so the repository
   needs no binary editor and no Python/Pillow dependency.

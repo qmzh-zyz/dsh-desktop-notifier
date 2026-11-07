@@ -1,6 +1,6 @@
 #requires -Version 5.1
 <#
-  dsh-away-alerts :: Windows notification sender
+  dsh-desktop-notifier :: Windows notification sender
   ---------------------------------------------------------------------------
   Pure-ASCII on purpose: PowerShell 5.1 decodes a BOM-less .ps1 with the local
   code page, so every localized string travels through the UTF-8 JSON payload.
@@ -20,7 +20,7 @@
   {
     "title": "DSH 需要你审批",
     "body": "bash: sandbox escalation ...",
-    "appId": "DeepSeek.Harness.AwayAlerts",
+    "appId": "DeepSeek.Harness.DesktopNotifier",
     "displayName": "DeepSeek Harness",
     "iconPath": "C:\\...\\icon.png",
     "logo": "C:\\...\\icon-approval.png",
@@ -30,7 +30,7 @@
     "skipWhenFocused": true,
     "focusProcesses": ["DeepSeek Harness"],
     "tag": "dsh-away-approval",
-    "group": "dsh-away-alerts"
+    "group": "dsh-desktop-notifier"
   }
 
   Prints exactly one JSON line, for example:
@@ -60,8 +60,8 @@ function Emit($obj) {
 
 function Focused-ProcessName() {
   try {
-    if (-not ('AwayAlertsWin32' -as [type])) {
-      Add-Type -Namespace '' -Name 'AwayAlertsWin32' -MemberDefinition @'
+    if (-not ('DesktopNotifierWin32' -as [type])) {
+      Add-Type -Namespace '' -Name 'DesktopNotifierWin32' -MemberDefinition @'
 [System.Runtime.InteropServices.DllImport("user32.dll")]
 public static extern System.IntPtr GetForegroundWindow();
 [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -72,14 +72,14 @@ public static extern bool IsWindowVisible(System.IntPtr hWnd);
 public static extern uint GetWindowThreadProcessId(System.IntPtr hWnd, out uint lpdwProcessId);
 '@
     }
-    $hwnd = [AwayAlertsWin32]::GetForegroundWindow()
+    $hwnd = [DesktopNotifierWin32]::GetForegroundWindow()
     if ($hwnd -eq [System.IntPtr]::Zero) { return '' }
     # A minimized window can still be the foreground window. The user tucked DSH
     # away and wants the reminder, so a minimized window never counts as "watching".
-    if ([AwayAlertsWin32]::IsIconic($hwnd)) { return '' }
-    if (-not [AwayAlertsWin32]::IsWindowVisible($hwnd)) { return '' }
+    if ([DesktopNotifierWin32]::IsIconic($hwnd)) { return '' }
+    if (-not [DesktopNotifierWin32]::IsWindowVisible($hwnd)) { return '' }
     $ownerPid = 0
-    [void][AwayAlertsWin32]::GetWindowThreadProcessId($hwnd, [ref]$ownerPid)
+    [void][DesktopNotifierWin32]::GetWindowThreadProcessId($hwnd, [ref]$ownerPid)
     if (-not $ownerPid) { return '' }
     $process = Get-Process -Id $ownerPid -ErrorAction SilentlyContinue
     if ($process) { return [string]$process.ProcessName }
@@ -103,7 +103,7 @@ $title = [string]$payload.title
 if (-not $title) { $title = 'DeepSeek Harness' }
 $body = [string]$payload.body
 $appId = [string]$payload.appId
-if (-not $appId) { $appId = 'DeepSeek.Harness.AwayAlerts' }
+if (-not $appId) { $appId = 'DeepSeek.Harness.DesktopNotifier' }
 $displayName = [string]$payload.displayName
 if (-not $displayName) { $displayName = 'DeepSeek Harness' }
 $iconPath = [string]$payload.iconPath
@@ -244,7 +244,7 @@ try {
           $tag = [string]$payload.tag
           if ($tag) {
             $group = [string]$payload.group
-            if (-not $group) { $group = 'dsh-away-alerts' }
+            if (-not $group) { $group = 'dsh-desktop-notifier' }
             $toast.Tag = $tag
             $toast.Group = $group
           }

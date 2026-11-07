@@ -1,10 +1,10 @@
-# Layer contributed when a profile lists this bundle (dsh plugin add dsh-away-alerts).
+# Layer contributed when a profile lists this bundle (dsh plugin add dsh-desktop-notifier).
 # Users can override any of these config values in the profile's own cordis.patch.yml:
 #
-#   - id: away-alerts
+#   - id: desktop-notifier
 #     config:
 #       completion:
 #         minTurnMs: 0
 - insert:
-    - id: away-alerts
-      name: 'dsh-away-alerts'
+    - id: desktop-notifier
+      name: 'dsh-desktop-notifier'
