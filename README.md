@@ -1,5 +1,7 @@
 # dsh-desktop-notifier
 
+**简体中文** | [English](README.en.md)
+
 > 你最小化 DSH 之后：**审批请求在桌面右下角弹出来**，**任务跑完在任务栏图标上挂一个红色角标并响一声**。
 
 给 DeepSeek Harness 桌面版的 Windows 提醒插件。审批卡片只在窗口里，切走以后没人看得见；这个插件把两件事挪到系统层：
