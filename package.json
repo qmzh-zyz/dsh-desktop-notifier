@@ -1,0 +1,46 @@
+{
+  "name": "dsh-away-alerts",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 插件：最小化时审批请求弹 Windows 右下角通知，任务完成时在任务栏图标挂角标并响提示音。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check lib/index.js && node --check lib/policy.mjs",
+    "icons": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/icons.ps1",
+    "demo": "node tools/demo.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "notification",
+    "approval",
+    "toast",
+    "taskbar",
+    "badge",
+    "windows",
+    "sound"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

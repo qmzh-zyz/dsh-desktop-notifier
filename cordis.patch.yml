@@ -1,0 +1,10 @@
+# Layer contributed when a profile lists this bundle (dsh plugin add dsh-away-alerts).
+# Users can override any of these config values in the profile's own cordis.patch.yml:
+#
+#   - id: away-alerts
+#     config:
+#       completion:
+#         minTurnMs: 0
+- insert:
+    - id: away-alerts
+      name: 'dsh-away-alerts'
